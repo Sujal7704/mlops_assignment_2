@@ -1,0 +1,98 @@
+schema: '2.0'
+stages:
+  eda:
+    cmd: python srs/eda.py
+    deps:
+    - path: data/diabetes.csv
+      hash: md5
+      md5: f2906818eda8fcfc8f8416557ab1e6df
+      size: 23873
+    - path: srs/eda.py
+      hash: md5
+      md5: 85d54df4b39a8fa485c1ad97e78f6221
+      size: 2196
+    outs:
+    - path: reports/eda/
+      hash: md5
+      md5: e7d81055bf0e43937b5cc41c39ac1f30.dir
+      size: 987036
+      nfiles: 22
+  preprocess:
+    cmd: python srs/preprocess.py
+    deps:
+    - path: data/diabetes.csv
+      hash: md5
+      md5: f2906818eda8fcfc8f8416557ab1e6df
+      size: 23873
+    - path: params.yaml
+      hash: md5
+      md5: 84a118a47379faa0e7672eab84ec7092
+      size: 569
+    - path: srs/preprocess.py
+      hash: md5
+      md5: c08a8bc0affd882d6786f5edf9b8715b
+      size: 1769
+    outs:
+    - path: data/processed/
+      hash: md5
+      md5: f0dbef579f43200f0839e7c7fdbb7acd.dir
+      size: 124043
+      nfiles: 4
+  train:
+    cmd: python srs/train.py
+    deps:
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: 939350c742029ee39d501682e67a10ce
+      size: 97262
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 1b77ebe350280e4ae57a98e7b19e5fbc
+      size: 1851
+    - path: params.yaml
+      hash: md5
+      md5: 84a118a47379faa0e7672eab84ec7092
+      size: 569
+    - path: srs/train.py
+      hash: md5
+      md5: 5867bfde65ddc9dabc5edc81f0784b7e
+      size: 2473
+    outs:
+    - path: models/
+      hash: md5
+      md5: 920e8b5e7869c5fbcdee65bb057c1b65.dir
+      size: 2065253
+      nfiles: 5
+  evaluate:
+    cmd: python srs/evaluate.py
+    deps:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: a3a419e27b118ebb349f496d566f8fd5
+      size: 24459
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: 8719d3bc4dc2551ceb506133a598e805
+      size: 471
+    - path: models/
+      hash: md5
+      md5: 920e8b5e7869c5fbcdee65bb057c1b65.dir
+      size: 2065253
+      nfiles: 5
+    - path: params.yaml
+      hash: md5
+      md5: 84a118a47379faa0e7672eab84ec7092
+      size: 569
+    - path: srs/evaluate.py
+      hash: md5
+      md5: 2c01112bfeca70f15264314666227931
+      size: 1895
+    outs:
+    - path: experiments/results.csv
+      hash: md5
+      md5: 922aeb0ff0326fb386be045129495f43
+      size: 258
+    - path: experiments/results.json
+      hash: md5
+      md5: ef9c936a57d33f95f98b48b4767e8d53
+      size: 739

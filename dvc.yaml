@@ -1,0 +1,40 @@
+stages:
+  eda:
+    cmd: python srs/eda.py
+    deps:
+      - srs/eda.py
+      - data/diabetes.csv
+    outs:
+      - reports/eda/
+
+  preprocess:
+    cmd: python srs/preprocess.py
+    deps:
+      - srs/preprocess.py
+      - data/diabetes.csv
+      - params.yaml
+    outs:
+      - data/processed/
+
+  train:
+    cmd: python srs/train.py
+    deps:
+      - srs/train.py
+      - data/processed/X_train.csv
+      - data/processed/y_train.csv
+      - params.yaml
+    outs:
+      - models/
+
+  evaluate:
+    cmd: python srs/evaluate.py
+    deps:
+      - srs/evaluate.py
+      - data/processed/X_test.csv
+      - data/processed/y_test.csv
+      - models/
+      - params.yaml
+    outs:
+      - experiments/results.csv
+    metrics:
+      - experiments/results.json

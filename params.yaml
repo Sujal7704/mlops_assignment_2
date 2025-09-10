@@ -1,0 +1,36 @@
+dataset: data/diabetes.csv
+
+preprocessing:
+  scale: true
+  encode: false
+
+models:
+  LogisticRegression:
+    C: 10.0
+    max_iter: 500
+    random_state: 42
+
+  DecisionTreeClassifier:
+    max_depth: 5
+    random_state: 42
+
+  RandomForestClassifier:
+    n_estimators: 200
+    max_depth: 7
+    random_state: 42
+
+  XGBClassifier:
+    n_estimators: 200
+    learning_rate: 0.1
+    max_depth: 5
+    random_state: 42
+
+  SVC:
+    kernel: rbf
+    C: 1.0
+    probability: True
+    random_state: 42
+
+training:
+  test_size: 0.2
+  random_state: 42
